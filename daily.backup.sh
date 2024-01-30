@@ -33,7 +33,13 @@ for important_file_path in $(echo "$all_important_files_paths"); do
 
 	tar \
 	-czf "$backup_path/$compressed_important_file_name" \
-	--absolute-name "$important_file_path";
+	--absolute-name "$important_file_path"\
+	&> /dev/null; # Discard any error of output provided from tar program 
+
+	# Remove the currupt tar file created if an error occured during the compression
+	if [[ ! $? -eq 0 ]]; then
+		find "$backup_path" -name "$compressed_important_file_name" -delete;
+	fi
 done;
 
 #find "$backup_path" -mtime +7 -type f -delete;
