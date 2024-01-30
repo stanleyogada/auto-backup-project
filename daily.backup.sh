@@ -1,15 +1,41 @@
 #!/bin/bash
 
-file_or_dir_to_backup_full_path="$1";
-file_or_dir_to_backup_name="$(basename $1)";
+# Author: Stanley Ogada Chinedu
+# Date Created: 29/01/2024
+# Last Modified: 30/01/2024
+#
+# Description
+# - Performs a daily backup of the provided important file/s.
+# - Compresses with today's date, the important file/s with gzip + tar programs.
+# - All the compressions are stored in a backup dir in your HOME directory. (~/backups/daily/)
+#
+# Usage
+# (1) If you wish to backup one file for example /home/user/web-app is the file provide it as a string (between quotes) as the positional arguement number 1.
+# ---
+# ./daily.backup.sh "/home/user/web-app"
+# ---
+#
+#
+# (2) If you wish to backup multiple files same as the above step but add whitespaces as seperator still withing the string.
+# ---
+# ./daily.backup.sh "/home/user/web-app /home/user/Videos /tmp/my-temp-files"
+# ---
 
-backup_path="$HOME/backups/$file_or_dir_to_backup_name/daily";
+all_important_files_paths="$1";
 
-mkdir -p $backup_path;
+# Loops through the important files paths and do for each important file, create its own directory in the backup directory and save the compression there
+for important_file_path in $(echo "$all_important_files_paths"); do
+	important_file_name="$(basename $important_file_path)";
+	compressed_important_file_name="$important_file_name-$(date +%d-%m-%Y).tar.gz";
+	backup_path="$HOME/backups/$important_file_name/daily";
 
-# Compress the important dir ($HOME/web-app)
-tar -czf "$backup_path/$file_or_dir_to_backup_name-$(date +%d-%m-%Y).tar.gz" --absolute-name "$file_or_dir_to_backup_full_path";
+	mkdir -p $backup_path;
 
-find "$backup_path" -mtime +7 -type f -delete;
+	tar \
+	-czf "$backup_path/$compressed_important_file_name" \
+	--absolute-name "$important_file_path";
+done;
 
-rsync --delete -a --mkpath "$backup_path" "vps@54.163.143.62:~/backups/$file_or_dir_to_backup_name/";
+#find "$backup_path" -mtime +7 -type f -delete;
+
+#rsync --delete -a --mkpath "$backup_path" "vps@54.163.143.62:~/backups/$important_file_name/";
