@@ -30,6 +30,8 @@
 
 all_important_files_paths="$1";
 remote_host="$2"
+log_path="$HOME/.backups.logs";
+mkdir -p $log_path;
 
 # Terminate if $1 is not provided
 if [[ -z $all_important_files_paths || -z $remote_host ]]; then
@@ -38,7 +40,8 @@ if [[ -z $all_important_files_paths || -z $remote_host ]]; then
 	exit 1;
 fi;
 # Format: <script_type>/<cron_pattern>/<cron_summary>
-all_type=("daily/0 4 \* \* \*/4 AM every day", "weekly/0 2 \* \* 0/2 AM every Sunday", "monthly/0 0 1 \* \*/midnight on the 1st day of every month");
+#all_type=("daily/0 4 \* \* \*/4 AM every day", "weekly/0 2 \* \* 0/2 AM every Sunday", "monthly/0 0 1 \* \*/midnight on the 1st day of every month");
+all_type=("daily/\* \* \* \* \*/4 AM every day");
 
 for element in "${all_type[@]}"; do
 	script_type="$(echo $element | cut -d "/" -f 1)";
@@ -62,7 +65,7 @@ for element in "${all_type[@]}"; do
 	# If no cronjob is found for each script, write the cron job to the crontab file 
 	has_script_cron="$(crontab -l | grep $script_type)";
 	if [[ -z $has_script_cron ]]; then
-		echo -e "$(crontab -l)\n$(echo $cron_pattern | sed 's/\\//g') $script_type.backup.sh \"$all_important_files_paths\" \"$remote_host\"" | crontab -;
+		echo -e "$(crontab -l)\n$(echo $cron_pattern | sed 's/\\//g') /usr/local/bin/$script_type.backup.sh \"$all_important_files_paths\" \"$remote_host\" >> $log_path/$script_type.cron.log 2>&1" | crontab -;
 
 		echo "A $script_type backup of $all_important_files_paths will commence by $cron_summary"
 	else
