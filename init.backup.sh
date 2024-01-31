@@ -46,8 +46,8 @@ if [[ -z $all_important_files_paths || -z $remote_host || -z $ssh_private_key ]]
 	exit 1;
 fi;
 # Format: <script_type>/<cron_pattern>/<cron_summary>
-#all_type=("daily/0 4 \* \* \*/4 AM every day", "weekly/0 2 \* \* 0/2 AM every Sunday", "monthly/0 0 1 \* \*/midnight on the 1st day of every month");
-all_type=("daily/\* \* \* \* \*/4 AM every day");
+all_type=("daily/0 4 \* \* \*/4 AM every day", "weekly/0 2 \* \* 0/2 AM every Sunday", "monthly/0 0 1 \* \*/midnight on the 1st day of every month");
+#all_type=("daily/\* \* \* \* \*/4 AM every day");
 
 for element in "${all_type[@]}"; do
 	script_type="$(echo $element | cut -d "/" -f 1)";
