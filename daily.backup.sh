@@ -14,16 +14,20 @@
 # Usage
 # (1) If you wish to backup one file for example /home/user/web-app is the file provide it as a string (between quotes) as the positional arguement number 1.
 # ---
-# ./daily.backup.sh "/home/user/web-app" "user@198.168.1.0"
+# ./daily.backup.sh "/home/user/web-app" "user@198.168.1.0" "/home/local/.ssh/private-key";
+
 # ---
 #
 # (2) If you wish to backup multiple files same as the above step but add whitespaces as seperator still withing the string.
 # ---
-# ./daily.backup.sh "/home/user/web-app /home/user/Videos /tmp/my-temp-files" "user@198.168.1.0"
+# ./daily.backup.sh "/home/user/web-app /home/user/Videos /tmp/my-temp-files" "user@198.168.1.0" "/home/local/.ssh/private-key";
+
 # ---
 
 all_important_files_paths="$1";
-remote_destination="$2"
+remote_destination="$2";
+ssh_private_key="$3";
+
 echo
 echo "A daily cron backup started($(date +%c))";
 # Loops through the important files paths and do for each important file, create its own directory in the backup directory and save the compression there
@@ -53,7 +57,7 @@ declare -r BACKUP_PATH="$HOME/backups";
 find "$BACKUP_PATH" -mtime +7 -type f -delete;
 echo
 # Synchronize local backup with the remote destination backup
-/usr/bin/rsync --delete -avv --mkpath -e "ssh -i /home/zero-packet-loss/.ssh/default-key" "$BACKUP_PATH/" "$remote_destination:~/backups/";
+/usr/bin/rsync --delete -avv --mkpath -e "ssh -i $ssh_private_key" "$BACKUP_PATH/" "$remote_destination:~/backups/";
 echo
 echo "A daily cron backup ended ($(date +%c))";
 echo
