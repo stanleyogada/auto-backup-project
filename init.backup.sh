@@ -37,26 +37,37 @@ if [[ -z $all_important_files_paths || -z $remote_host ]]; then
 	echo "Usage: $0 \"/path-to-backup /another-important-file\" \"user@192.168.1.0\"";
 	exit 1;
 fi;
+# Format: <script_type>/<cron_pattern>/<cron_summary>
+all_type=("daily/0 4 \* \* \*/4 AM every day", "weekly/0 2 \* \* 0/2 AM every Sunday", "monthly/0 0 1 \* \*/midnight on the 1st day of every month");
 
-# Add the daily script to `/usr/local/bin` so the scrip can be execute with the full path
-if [[ ! -e /usr/local/bin/daily.backup.sh ]]; then
-	if [[ ! -e ./daily.backup.sh ]]; then
-		echo "cd to the project's directory first. You can only run $0 from inside it parent directory";
-		exit 1;
+for element in "${all_type[@]}"; do
+	script_type="$(echo $element | cut -d "/" -f 1)";
+	cron_pattern="$(echo $element | cut -d "/" -f 2)";
+	cron_summary="$(echo $element | cut -d "/" -f 3)";
+
+	# Add the script to `/usr/local/bin` so the script can be execute with the full path
+	if [[ ! -e "/usr/local/bin/$script_type.backup.sh" ]]; then
+		if [[ ! -e ./$script_type.backup.sh ]]; then
+			echo "cd to the project's directory first. You can only run $0 from inside it parent directory";
+			exit 1;
+		fi;
+
+		sudo cp "./$script_type.backup.sh" /usr/local/bin/;
+		sudo chmod 777 $(which "$script_type.backup.sh"); 
 	fi;
 
-	sudo cp ./daily.backup.sh /usr/local/bin/;
-	sudo chmod 777 $(which daily.backup.sh); 
-fi;
+	# If no cronjob is found for each script, write the cron job to the crontab file 
+	has_script_cron="$(crontab -l | grep $script_type)";
+	if [[ -z $has_script_cron ]]; then
+		echo -e "$(crontab -l)\n$(echo $cron_pattern | sed 's/\\//g') $script_type.backup.sh \"$all_important_files_paths\" \"$remote_host\"" | crontab -;
 
-# If no cronjob is found, write the cron job to the crontab file with daily (02:00 AM)
-has_daily_cron="$(crontab -l | grep daily)";
-if [[ -z $has_daily_cron ]]; then
-	echo -e "$(crontab -l)\n0 2 * * * daily.backup.sh \"$all_important_files_paths\" \"$remote_host\"" | crontab -;
-	echo "A daily backup of $all_important_files_paths will commence by 02:00 AM"
-else
-	echo "Already has a daily cron running already!"
-	echo "You might need to edit the cron manually!"
-fi;
+		echo "A $script_type backup of $all_important_files_paths will commence by $cron_summary"
+	else
+		echo "Already has a $script_type cron running already!"
+		echo "You might need to edit the cron manually!"
+	fi;
+done;	
+
+
 
 exit 0;
