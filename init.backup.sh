@@ -45,16 +45,19 @@ for element in "${all_type[@]}"; do
 	cron_pattern="$(echo $element | cut -d "/" -f 2)";
 	cron_summary="$(echo $element | cut -d "/" -f 3)";
 
-	# Add the script to `/usr/local/bin` so the script can be execute with the full path
-	if [[ ! -e "/usr/local/bin/$script_type.backup.sh" ]]; then
-		if [[ ! -e ./$script_type.backup.sh ]]; then
-			echo "cd to the project's directory first. You can only run $0 from inside it parent directory";
-			exit 1;
-		fi;
-
-		sudo cp "./$script_type.backup.sh" /usr/local/bin/;
-		sudo chmod 777 $(which "$script_type.backup.sh"); 
+	# Remove the script from /usr/local/bin if it's there before
+	if [[ -e "/usr/local/bin/$script_type.backup.sh" ]]; then
+		sudo rm -f "/usr/local/bin/$script_type.backup.sh"; 
 	fi;
+
+	if [[ ! -e ./$script_type.backup.sh ]]; then
+		echo "cd to the project's directory first. You can only run $0 from inside it parent directory";
+		exit 1;
+	fi;
+
+	# Add the script to `/usr/local/bin` so the script can be execute with the full path
+	sudo cp "./$script_type.backup.sh" /usr/local/bin/;
+	sudo chmod 555 $(which "$script_type.backup.sh"); 
 
 	# If no cronjob is found for each script, write the cron job to the crontab file 
 	has_script_cron="$(crontab -l | grep $script_type)";
@@ -64,10 +67,11 @@ for element in "${all_type[@]}"; do
 		echo "A $script_type backup of $all_important_files_paths will commence by $cron_summary"
 	else
 		echo "Already has a $script_type cron running already!"
-		echo "You might need to edit the cron manually!"
+		echo "You might need to edit the crontab manually using `crontab -e`"
 	fi;
 done;	
 
-
+echo
+echo "Find your local backups in $HOME/backups and the remote backups in $remote_host:~/backups"
 
 exit 0;

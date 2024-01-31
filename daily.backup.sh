@@ -46,6 +46,7 @@ done;
 
 declare -r BACKUP_PATH="$HOME/backups";
 
+# Remove all backup files older than 7 days
 find "$BACKUP_PATH" -mtime +7 -type f -delete;
 
 # Synchronize local backup with the remote destination backup
