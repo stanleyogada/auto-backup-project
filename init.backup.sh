@@ -6,8 +6,8 @@
 #
 # Description
 # - This script adds all the backup scripts (daily, weekly, monthly) to the crontab. Hence eliminating the need for adding the backups scripts manually to the crontab.
-# - All the compressions are stored in a backup dir in your HOME directory. (~/backups/)
-# - Note: You must have SSH key setup on the remote host. Find the backup dir also in the Home directory of the remote user. (~/backups)
+# - All the compressions are stored in a backup dir in your HOME directory. (~/.backups/)
+# - Note: You must have SSH key setup on the remote host. Find the backup dir also in the Home directory of the remote user. (~/.backups)
 #
 # Usage
 # # (1) If you wish to backup one file for example /home/user/web-app is the file provide it as a string (between quotes) as the positional arguement number 1.
@@ -35,7 +35,7 @@ all_important_files_paths="$1";
 remote_host="$2";
 ssh_private_key="$3";
 
-log_path="$HOME/.backups.logs";
+log_path="$HOME/.backups/.logs";
 mkdir -p $log_path;
 
 # Terminate if $1 is not provided
@@ -81,6 +81,7 @@ for element in "${all_type[@]}"; do
 done;	
 
 echo
-echo "Find your local backups in $HOME/backups and the remote backups in $remote_host:~/backups"
+echo "Find your local backups in $HOME/.backups and the remote backups in $remote_host:~/backups"
+echo "Also find the logs in $HOME/.backups/.logs"
 
 exit 0;
