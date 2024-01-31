@@ -49,3 +49,5 @@ declare -r BACKUP_PATH="$HOME/backups";
 # Remove all backup files older than 30 days
 find "$BACKUP_PATH" -mtime +30 -type f -delete;
 
+# Synchronize local backup with the remote destination backup
+rsync --delete -a --mkpath "$BACKUP_PATH/" "$remote_destination:~/backups/";
