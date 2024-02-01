@@ -1,8 +1,7 @@
 # AUTO BACKUP SCRIPT
 
 ### Overview
-
-This README provides a guide on using the backup initialization script (`init.backup.sh`). The script automates the addition of backup tasks to the crontab for daily, weekly, and monthly backups. All compressions (`.tar.gz`) are stored in a backup directory in the user's home directory (`~/.backups/`), and SSH key authentication is required for remote hosts.
+The script automates the addition of backup tasks to the crontab for daily, weekly, and monthly backups. All compressions (`.tar.gz`) are stored in a backup directory in the user's home directory (`~/.backups/`), and SSH key authentication is required for remote hosts.
 
 ### Usage
 
