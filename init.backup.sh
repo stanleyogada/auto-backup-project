@@ -5,30 +5,30 @@
 # Last Modified: 30/01/2024
 #
 # Description
-# - This script adds all the backup scripts (daily, weekly, monthly) to the crontab. Hence eliminating the need for adding the backups scripts manually to the crontab.
+# - This script adds all the backup scripts (daily, weekly, monthly) to the crontab. Hence eliminating the need for adding the backup scripts manually to the crontab.
 # - All the compressions are stored in a backup dir in your HOME directory. (~/.backups/)
-# - Note: You must have SSH key setup on the remote host. Find the backup dir also in the Home directory of the remote user. (~/.backups)
+# - Note: You must have an SSH key setup on the remote host. Find the backup dir also in the Home directory of the remote user. (~/.backups)
 #
 # Usage
-# # (1) If you wish to backup one file for example /home/user/web-app is the file provide it as a string (between quotes) as the positional arguement number 1.
+# # (1) If you wish to backup one file for example /home/user/web-app is the file provide it as a string (between quotes) as the positional argument number 1.
 # ---
 # ./init.backup.sh "/home/user/web-app" "user@198.168.1.0" "/home/local/.ssh/private-key";
 
 # ---
 #
 #
-# (2) If you wish to backup multiple files same as the above step but add whitespaces as seperator still withing the string.
+# (2) If you wish to backup multiple files same as the above step but add whitespaces as separators still within the string.
 # ---
 # ./init.backup.sh "/home/user/web-app /home/user/Videos /tmp/my-temp-files" "user@198.168.1.0" "/home/local/.ssh/private-key";
 
 # ---
 #
 #
-# The positional arguement number 1 should be a string, and can have multiple path of directories of files to be backed up seperated by spaces.
+# The positional argument number 1 should be a string and can have multiple paths of directories of files to be backed up and separated by spaces.
 #
-# The positional arguement number 2 should be a string, and should the a remote host.
+# The positional argument number 2 should be a string, and should the a remote host.
 # 
-# The positional argument number 3 should be a string that contains the path to your private key to remote host.
+# The positional argument number 3 should be a string that contains the path to your private key to the remote host.
 
 
 all_important_files_paths="$1";
@@ -40,7 +40,7 @@ mkdir -p $log_path;
 
 # Terminate if $1 is not provided
 if [[ -z $all_important_files_paths || -z $remote_host || -z $ssh_private_key ]]; then
-	echo "ERROR: Provide the path to of all important file in a string, a remote host and the path to your private ssh to your remote host";
+	echo "ERROR: Provide the path to all important files in a string, a remote host, and the path to your private SSH to your remote host";
 	echo 
 	echo "Usage: $0 \"/home/local/important-file /another-important-file\" \"user@192.168.1.0\" \"/home/local/.ssh/private-key\"\;";
 	exit 1;
@@ -60,11 +60,11 @@ for element in "${all_type[@]}"; do
 	fi;
 
 	if [[ ! -e ./$script_type.backup.sh ]]; then
-		echo "cd to the project's directory first. You can only run $0 from inside it parent directory";
+		echo "cd to the project's directory first. You can only run $0 from inside its parent directory";
 		exit 1;
 	fi;
 
-	# Add the script to `/usr/local/bin` so the script can be execute with the full path
+	# Add the script to `/usr/local/bin` so the script can be executed with the full path
 	sudo cp "./$script_type.backup.sh" /usr/local/bin/;
 	sudo chmod 555 $(which "$script_type.backup.sh"); 
 
