@@ -18,7 +18,7 @@ ssh_private_key="$3";
 
 echo
 echo "A weekly cron backup started($(date +%c))";
-# Loops through the important files paths and do for each important file, create its own directory in the backup directory and save the compression there
+# Loops through the important file paths and do for each important file, create its directory in the backup directory, and save the compression there
 for important_file_path in $(echo "$all_important_files_paths"); do
 	important_file_name="$(basename $important_file_path)";
 	compressed_important_file_name="$important_file_name-$(date +%d-%m-%Y).tar.gz";
@@ -30,7 +30,6 @@ for important_file_path in $(echo "$all_important_files_paths"); do
 	-cvvzf "$backup_path/$compressed_important_file_name" \
 	--absolute-name "$important_file_path";
 
-	# Remove the currupt tar file created if an error occured during the compression
 	if [[ ! $? -eq 0 ]]; then
 		echo "Commpression of $important_file_path FAILED!"
 	else
