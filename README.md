@@ -5,7 +5,7 @@
 ## Overview
 The script automates the addition of backup tasks to the crontab for daily (04:00 AM), weekly (Sundays, 02:00 AM), and monthly (Sundays, 02:00 AM) backups. All compressions (`.tar.gz`) are stored in a backup directory in the user's home directory (`~/.backups/`), and SSH key authentication is required for remote hosts.
 
-Only keeps the most recent (7) daily backup files, (4)  weekly backup files, and (12) monthly backup files. Hence deleting older back files.
+Only keeps the most recent (7) daily backup files, (4)  weekly backup files, and (12) monthly backup files. Hence deleting older backup files.
 
 
 ## Usage
