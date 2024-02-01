@@ -76,7 +76,7 @@ for element in "${all_type[@]}"; do
 		echo "A $script_type backup of $all_important_files_paths will commence by $cron_summary"
 	else
 		echo "Already has a $script_type cron running already!"
-		echo "You might need to edit the crontab manually using `crontab -e`"
+		echo "You might need to edit the crontab manually using \`crontab -e\`"
 	fi;
 done;	
 
