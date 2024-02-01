@@ -11,4 +11,4 @@ tar -czf "$backup_path/$file_or_dir_to_backup_name-$(date +%d-%m-%Y).tar.gz" --a
 
 find "$backup_path" -mtime +31 -type f -delete;
 
-rsync --delete -a --mkpath "$backup_path" "vps@54.163.143.62:~/backups/$file_or_dir_to_backup_name/";
+rsync --delete -a --mkpath "$backup_path" "vps@192.168.1.0:~/backups/$file_or_dir_to_backup_name/";
