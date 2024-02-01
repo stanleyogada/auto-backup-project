@@ -1,9 +1,9 @@
 # AUTO BACKUP SCRIPT
 
-### Overview
+## Overview
 The script automates the addition of backup tasks to the crontab for daily, weekly, and monthly backups. All compressions (`.tar.gz`) are stored in a backup directory in the user's home directory (`~/.backups/`), and SSH key authentication is required for remote hosts.
 
-### Usage
+## Usage
 
 Follow these three steps to set up and run the backup script:
 
@@ -22,7 +22,7 @@ Follow these three steps to set up and run the backup script:
    ./init.backup.sh "/path/to/important-file /another-important-file" "user@remote-host" "/path/to/ssh/private-key"
    ```
 
-### Explanation of Script Arguments
+## Explanation of Script Arguments
 
 - **Argument 1 (`all_important_files_paths`):**
   - Description: A string containing 1 or multiple paths of directories or files to be backed up, separated by spaces.
@@ -36,7 +36,7 @@ Follow these three steps to set up and run the backup script:
   - Description: A string containing the path to the private SSH key for authentication to the remote host.
   - Example: `"/home/local/.ssh/private-key"`
 
-### Real-World Scenario usage of the init script
+## A Real-World Scenario usage of the init script 🧪
 
 Assuming you have set up SSH public-key authentication with a remote system (`stanley@ec2.com`), and you want to back up your important Videos and Web-App directories, you can run the following command:
 
