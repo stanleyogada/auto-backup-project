@@ -5,6 +5,9 @@ The script automates the addition of backup tasks to the crontab for daily (04:0
 
 Only keeps the most recent (7) daily backup files, (4)  weekly backup files, and (12) monthly backup files. Hence deleting older back files.
 
+
+**Author: Stanley Chinedu Ogada**
+
 ## Usage
 
 Follow these three steps to set up and run the backup script:
@@ -58,3 +61,7 @@ In this example, the script will schedule daily, weekly, and monthly backups for
 
 - **Logs Directory:**
   - `$HOME/.backups/.logs/`
+ 
+
+
+*Note: This documentation was authored by Stanley Chinedu Ogada. If you have any questions or encounter issues, feel free to reach out for personalized assistance.*
