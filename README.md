@@ -61,6 +61,10 @@ In this example, the script will schedule daily, weekly, and monthly backups for
 
 - **Logs Directory:**
   - `$HOME/.backups/.logs/`
+
+- **Tree structure:**
+<img width="523" alt="image" src="https://github.com/stanleyogada/auto-backup-project/assets/102979724/543e6d75-8156-4684-9afe-56ad17495889">
+
  
 
 
