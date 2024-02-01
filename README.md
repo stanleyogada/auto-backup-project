@@ -8,7 +8,7 @@ The script automates the addition of backup tasks to the crontab for daily (04:0
 Only keeps the most recent (7) daily backup files, (4)  weekly backup files, and (12) monthly backup files. Hence deleting older backup files.
 
 
-## Usage
+## Usage (3 easy steps)
 
 Follow these three steps to set up and run the backup script:
 
@@ -26,6 +26,8 @@ Follow these three steps to set up and run the backup script:
    ```bash
    ./init.backup.sh "/path/to/important-file /another-important-file" "user@remote-host" "/path/to/ssh/private-key"
    ```
+   > Note: this is a one-time run and you may need to edit the cron job/s by yourself if you wish to make any changes. \
+   > Simply run `crontab -e` if you need to edit the jobs manually.
 
 ## Explanation of Script Arguments
 
