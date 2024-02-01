@@ -38,7 +38,7 @@ Follow these three steps to set up and run the backup script:
 
 ## A Real-World Scenario usage of the init script 🧪
 
-Assuming you have set up SSH public-key authentication with a remote system (`stanley@ec2.com`), and you want to back up your important Videos and Web-App directories, you can run the following command:
+Assuming you have set up SSH public-key authentication with a remote system (`stanley@ec2.com`) with a private key (`~/.ssh/ec2-key`), and you want to back up your important `~/Videos/` and `~/Web-App/` directories, you can run the following command:
 
 ```bash
 ./init.backup.sh "/home/stanley/Videos /home/stanley/Web-App" "stanley@ec2.com" "/home/stanley/.ssh/ec2-key"
