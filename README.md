@@ -65,7 +65,9 @@ In this example, the script will schedule daily, weekly, and monthly backups for
 - **Tree structure:**
 <img width="523" alt="image" src="https://github.com/stanleyogada/auto-backup-project/assets/102979724/543e6d75-8156-4684-9afe-56ad17495889">
 
- 
+
+> If you encounter errors in appropriate behaviors, make sure to double your paths (Note: re-running the init script will not write another cron job/s, so edit them yourself if you want to troubleshoot).\
+> Make sure you the private key the correct key
 
 
 *Note: This documentation was authored by Stanley Chinedu Ogada. If you have any questions or encounter issues, feel free to reach out for personalized assistance.*
