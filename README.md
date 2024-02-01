@@ -22,7 +22,7 @@ Follow these three steps to set up and run the backup script:
    cd auto-backup-project
    ```
 
-3. **Run the Init Script (You might be asked your sudo password):**
+3. **Run the Init Script (You might be asked for your sudo password):**
    ```bash
    ./init.backup.sh "/path/to/important-file /another-important-file" "user@remote-host" "/path/to/ssh/private-key"
    ```
